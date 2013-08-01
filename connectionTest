@@ -1,0 +1,66 @@
+#!/bin/bash
+
+#test connection of network
+
+Interface='wlan0'
+#tell user what is happening
+echo
+echo "---------- Begin Internet Connection Test ----------"
+echo
+echo "checking if $Interface is connected"
+NetworkUp=`/sbin/ifconfig $Interface`
+
+#get number 1 for IP existing, 0 for not existing
+IP=`echo "$NetworkUp" | grep inet | wc -l`
+
+#set file to hold network stats to be read by grep
+#and hold configurations
+sudo rm /etc/network/netstats
+iwconfig &> /etc/network/netstats
+
+#Here is the magic sauce: If the mode is set to Managed, it is wifi. 
+#Set a 1 to mode if it is managed, 0 if it is not. Other possible Mode
+#is Ad-Hoc. User can run connection Test to see if the mode is managed or not easilly.
+Mode=`grep "Managed" /etc/network/netstats | wc -l`
+
+#Run Check on IP
+if [[ $IP -eq 0 ]]; then
+echo "NO INTERNET --- CONNECTION IS DOWN!"
+else
+echo
+echo
+echo "++ THERE IS A CONNECTION ++"
+echo
+echo
+fi
+#Now run Check on Mode:
+if [ $Mode = 1 ]; then
+	echo "++ Mode configured as Managed: You're interfacing with Wifi ++"
+else
+	echo "++ Mode configured as Ad-Hoc: You're Brodacasting a Network ++"
+fi
+echo
+echo "---------- End Connection Test ----------"
+echo
+
+## If you want to always display connection statistics
+#Uncommen the following block:
+#echo "---------- Connection Statistics ----------"
+#echo
+#iwconfig
+#echo "---------- End Connection Statistics ----------"
+
+
+#Now to tell the computer to broadcast AdHoc network if there is no internet
+if [[ $IP -eq 0 ]]; then
+echo
+echo "-----------------------------------------------------------"
+echo
+echo "It seems as if there is no internet connection"
+echo "The Raspberry Pi will broadcast it's own network"
+echo "on the IP Adress 192.168.1.1 so you can SSH in and connect."
+echo "run the command goWiFi in the command line from SSH to"
+echo "connect to a WiFi network."
+sleep 4
+goAdHoc
+fi

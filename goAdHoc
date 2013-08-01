@@ -1,0 +1,58 @@
+#!/bin/bash
+
+#broadcast to adHoc network on command
+
+sudo rm /etc/network/interfaces
+
+#sudo cp /etc/network/interfacesAdHoc /etc/network/interfaces
+
+write_interfaces()
+{
+cat << _EOF_
+
+#Interfaces file generated on $(date)
+
+#### Default /etc/network/interfaces File: ####
+#auto lo
+#iface lo inet loopback
+#iface eth0 inet dhcp
+
+#allow-hotplug wlan0
+#iface wlan0 inet manual
+#wpa-roam /etc/wpa_supplicant/wpa_supplicant.conf
+#iface default inet dhcp
+
+
+#To initialize Ad-Hoc Network:
+auto lo
+iface lo inet loopback
+iface eth0 inet dhcp
+
+auto wlan0
+iface wlan0 inet static
+	#assign static IP for Ad-Hoc network
+	address 192.168.1.1
+	netmask 255.255.255.0
+	wireless-channel 1
+	#Set SSID
+	wireless-essid RasPi_AdHoc
+	#set mode as ad-hoc
+	wireless-mode ad-hoc
+
+_EOF_
+
+}
+
+write_interfaces > /etc/network/interfaces
+
+#cycle wlan0 to enact changes
+#sudo ifdown --force wlan0
+#sudo ifup --force wlan0
+
+#sudo /etc/init.d/networking restart
+echo
+echo "***********************************"
+echo " WARNING: SYSTEM WILL NOW REBOOT"
+echo "***********************************"
+sleep 5
+sudo reboot
