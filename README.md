@@ -1,6 +1,7 @@
 HeadlessRasPi
 =============
 
+
 headless operation of the Raspberry Pi. Scripts, sample configurations, and Readme's.
 H.A.R.P.S: HEADLESS ASSISTED RASPBERRY PI SETUP
 
@@ -12,13 +13,21 @@ Overview:
 Developed by Matter Labs at MatterIO, Cambridge, Massachusetts, in summer 2013
 
 TABLE OF CONTENTS:
-	1. Git Repository and Contents, and Definitions
-	2. Installation and Configuration
-	3. Operation
-	4. Troubleshooting
-	5. Resources
 
-1. GIT REPOSITORY, Contents, and Definitions:
+1. Git Repository and Contents, and Definitions
+	
+2. Installation and Configuration
+	
+3. Operation
+	
+4. Troubleshooting
+	
+5. Resources
+
+
+
+1: GIT REPOSITORY, Contents, and Definitions:
+
 	Appropriate files can be found on the MatterIO Git Repository.
 
 	This includes all files necessary for operating the Pi as headless, with a few
@@ -44,7 +53,7 @@ TABLE OF CONTENTS:
 		dnsmasq
 		rc.local
 
-2. INSTALLATION:
+2: INSTALLATION:
 
 	-dnsmasq
 	If dnsmasq is not installed, you will need to connect the raspberry pi to the internet
@@ -82,7 +91,7 @@ TABLE OF CONTENTS:
 			connectionTest
 
 
-3. OPERATION:
+3: OPERATION:
 
 	Under normal operation, the Raspberry Pi will broadcast a network when it is not 
 	connected to the internet. By default, this network is named RasPi_AdHoc.
@@ -110,7 +119,7 @@ TABLE OF CONTENTS:
 	startup will know that the Pi is not connected to the internet and begin broadcasting
 	the Ad-Hoc network again so that the user can try again.
 
-4. Troubleshooting
+4: Troubleshooting
 
 	The only error I encountered when developing this was that my computer did not connect
 	due to the ssh keys being incorrect. The error may look like this:
@@ -132,7 +141,7 @@ TABLE OF CONTENTS:
 	To fix this, run this from the command line on your own computer:
 		sudo ssh-keygen -R 192.168.1.1
 
-5. Resources: 
+5: Resources: 
 
 	To read more about Ad-Hoc networking on the Raspberry Pi and automating this process,
 	see the following links:
